@@ -1,0 +1,42 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=pinceladas_belleza
+    username: postgres
+    password: Admin
+
+    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://aws-0-us-east-2.pooler.supabase.com:6543/postgres
+#    username: postgres.grfasdqeokeabdgkpjjn
+#    password: mdtWmLi9km3ZaWi8
+#    driver-class-name: org.postgresql.Driver
+#    hikari:
+#      maximum-pool-size: 2
+#      minimum-idle: 1
+#      idle-timeout: 20000
+#      max-lifetime: 30000
+  jpa:
+#    database: postgresql
+#    database: pinceladas_belleza
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: none
+
+jwt:
+  secret: rGFv2rHb8nQxTzLDN4UwPZoVbHzLkq3JD9gTMBYMGzQ=
+  expiration: 86400000
+  refresh:
+    expiration: 604800000
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha

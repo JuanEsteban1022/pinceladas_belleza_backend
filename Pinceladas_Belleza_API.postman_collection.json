@@ -1,0 +1,627 @@
+{
+	"info": {
+		"_postman_id": "pinceladas-belleza-api",
+		"name": "Pinceladas de Belleza API",
+		"description": "Colección completa de endpoints para la API de Pinceladas de Belleza",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticación",
+			"item": [
+				{
+					"name": "Registrar Usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    console.log('Usuario registrado exitosamente');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"email\": \"admin@pinceladasbelleza.com\",\n    \"password\": \"Admin123!\",\n    \"fullName\": \"Administrador\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						},
+						"description": "Registra un nuevo usuario en el sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Iniciar Sesión",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set('jwt_token', jsonData.token);",
+									"    console.log('Token guardado: ' + jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"Admin123!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Inicia sesión y obtiene el token JWT"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints de autenticación y registro"
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "Obtener Todos los Productos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/productos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"productos"
+							]
+						},
+						"description": "Obtiene la lista completa de productos"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Producto por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/productos/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"productos",
+								"1"
+							]
+						},
+						"description": "Obtiene un producto específico por su ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Producto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set('producto_id', jsonData.id);",
+									"    console.log('Producto creado con ID: ' + jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Labial Rojo Mate\",\n    \"descripcion\": \"Labial de larga duración con acabado mate\",\n    \"precio\": 25.50,\n    \"cantidadStock\": 100,\n    \"categoriaId\": 1,\n    \"proveedorId\": 1,\n    \"urlDrive\": \"https://drive.google.com/file/ejemplo\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/productos/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"productos",
+								"create"
+							]
+						},
+						"description": "Crea un nuevo producto en el sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Producto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"nombre\": \"Labial Rojo Mate Premium\",\n    \"descripcion\": \"Labial de larga duración con acabado mate premium\",\n    \"precio\": 30.00,\n    \"cantidadStock\": 150\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/productos/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"productos",
+								"update"
+							]
+						},
+						"description": "Actualiza la información de un producto existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Producto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/productos/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"productos",
+								"1"
+							]
+						},
+						"description": "Elimina un producto del sistema"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para gestión de productos"
+		},
+		{
+			"name": "Categorías",
+			"item": [
+				{
+					"name": "Obtener Todas las Categorías",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category"
+							]
+						},
+						"description": "Obtiene la lista completa de categorías"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Categoría por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"1"
+							]
+						},
+						"description": "Obtiene una categoría específica por su ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Categoría",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set('categoria_id', jsonData.id);",
+									"    console.log('Categoría creada con ID: ' + jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombreCategoria\": \"Maquillaje\",\n    \"estado\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/category/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"create"
+							]
+						},
+						"description": "Crea una nueva categoría en el sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Categoría",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"nombreCategoria\": \"Maquillaje Premium\",\n    \"estado\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/category/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"update"
+							]
+						},
+						"description": "Actualiza la información de una categoría existente"
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Categoría",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"1"
+							]
+						},
+						"description": "Elimina una categoría del sistema"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para gestión de categorías"
+		},
+		{
+			"name": "Proveedores",
+			"item": [
+				{
+					"name": "Obtener Todos los Proveedores",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/proveedor",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proveedor"
+							]
+						},
+						"description": "Obtiene la lista completa de proveedores"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Proveedor por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/proveedor/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proveedor",
+								"1"
+							]
+						},
+						"description": "Obtiene un proveedor específico por su ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Proveedor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set('proveedor_id', jsonData.id);",
+									"    console.log('Proveedor creado con ID: ' + jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Distribuidora Beauty SA\",\n    \"contacto\": \"contacto@beautysa.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/proveedor/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proveedor",
+								"create"
+							]
+						},
+						"description": "Crea un nuevo proveedor en el sistema"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Proveedor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"nombre\": \"Distribuidora Beauty Premium SA\",\n    \"contacto\": \"info@beautypremium.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/proveedor/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proveedor",
+								"update"
+							]
+						},
+						"description": "Actualiza la información de un proveedor existente"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para gestión de proveedores"
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
