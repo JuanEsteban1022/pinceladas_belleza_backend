@@ -22,7 +22,6 @@ import java.util.List;
 @RequestMapping("/productos")
 @RequiredArgsConstructor
 @Tag(name = "Productos", description = "Gestión de productos de belleza")
-@SecurityRequirement(name = "bearerAuth")
 public class ProductosController {
     private final IProductos productos;
 
@@ -54,6 +53,7 @@ public class ProductosController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Productos.class))),
             @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content)
     })
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/create")
     public ResponseEntity<Productos> create(
             @Parameter(description = "Datos del producto a crear", required = true) @RequestBody ProductosDto productosDto) {
@@ -66,6 +66,7 @@ public class ProductosController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Productos.class))),
             @ApiResponse(responseCode = "404", description = "Producto no encontrado", content = @Content)
     })
+    @SecurityRequirement(name = "bearerAuth")
     @PatchMapping("/update")
     public ResponseEntity<Productos> update(
             @Parameter(description = "Datos del producto a actualizar", required = true) @RequestBody Productos producto) {
@@ -77,6 +78,7 @@ public class ProductosController {
             @ApiResponse(responseCode = "200", description = "Producto eliminado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Producto no encontrado", content = @Content)
     })
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(
             @Parameter(description = "ID del producto a eliminar", required = true) @PathVariable Long id) {
