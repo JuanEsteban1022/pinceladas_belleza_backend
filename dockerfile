@@ -11,6 +11,8 @@ WORKDIR /app
 COPY build.gradle settings.gradle ./
 COPY gradlew gradle ./
 
+RUN chmod +x gradlew
+
 # Copia el código fuente completo
 COPY src ./src
 
