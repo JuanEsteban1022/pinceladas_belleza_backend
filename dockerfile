@@ -9,8 +9,13 @@ WORKDIR /app
 
 # Copia los archivos de configuración de Gradle para cachear dependencias
 COPY build.gradle settings.gradle ./
-COPY gradlew gradle ./
 
+# Copia los archivos del Gradle Wrapper
+# Se separa para asegurar que se copia la estructura de carpetas (incluyendo el .jar)
+COPY gradlew .
+COPY gradle ./gradle
+
+# Dale permisos de ejecución al script gradlew
 RUN chmod +x gradlew
 
 # Copia el código fuente completo
