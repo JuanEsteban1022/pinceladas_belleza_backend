@@ -1,20 +1,14 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=pinceladas_belleza
-    username: postgres
-    password: Admin
-
     driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://aws-0-us-east-2.pooler.supabase.com:6543/postgres
-#    username: postgres.grfasdqeokeabdgkpjjn
-#    password: mdtWmLi9km3ZaWi8
-#    driver-class-name: org.postgresql.Driver
-#    hikari:
-#      maximum-pool-size: 2
-#      minimum-idle: 1
-#      idle-timeout: 20000
-#      max-lifetime: 30000
+#    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=pinceladas_belleza
+#    username: postgres
+#    password: Admin
+    url: jdbc:postgresql://ep-spring-dew-ahgmfoau-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require
+    username: neondb_owner
+    password: npg_OK1iPykwZL8D
+
   jpa:
 #    database: postgresql
 #    database: pinceladas_belleza
@@ -22,6 +16,7 @@ spring:
     open-in-view: false
     properties:
       hibernate:
+        default_schema: pinceladas_belleza
         dialect: org.hibernate.dialect.PostgreSQLDialect
         hbm2ddl:
           auto: none
