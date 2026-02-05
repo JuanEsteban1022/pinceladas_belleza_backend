@@ -15,7 +15,7 @@ public class TestConnection implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try {
             String result = jdbcTemplate.queryForObject("SELECT version();", String.class);
-            System.out.println("✅ Conexión exitosa a PostgreSQL en Neon:");
+            System.out.println("✅ Conexión exitosa a PostgreSQL en Clever Cloud:");
             System.out.println(result);
         } catch (Exception e) {
             System.err.println("❌ Error de conexión: " + e.getMessage());

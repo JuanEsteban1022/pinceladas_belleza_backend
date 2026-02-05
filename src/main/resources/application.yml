@@ -2,12 +2,12 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=pinceladas_belleza
-    username: postgres
-    password: Admin
-#    url: jdbc:postgresql://ep-spring-dew-ahgmfoau-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require
-#    username: neondb_owner
-#    password: npg_OK1iPykwZL8D
+#    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=pinceladas_belleza
+#    username: postgres
+#    password: Admin
+    url: jdbc:postgresql://biazz3hs24qqgnzjyikg-postgresql.services.clever-cloud.com:5432/biazz3hs24qqgnzjyikg?UseSSL=true&serverTimezone=UTC
+    username: ut0hpzqvekhwmlzyllzn
+    password: 99GPtyIQi7lQ5tt8WQv09qbwnGNAu2
 
   jpa:
 #    database: postgresql
