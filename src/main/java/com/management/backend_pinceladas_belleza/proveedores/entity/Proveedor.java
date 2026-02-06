@@ -1,6 +1,6 @@
 package com.management.backend_pinceladas_belleza.proveedores.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

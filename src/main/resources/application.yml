@@ -16,10 +16,11 @@ spring:
     open-in-view: false
     properties:
       hibernate:
-        default_schema: pinceladas_belleza
+#        default_schema: pinceladas_belleza
+        default_schema: pinceladasdb
         dialect: org.hibernate.dialect.PostgreSQLDialect
         hbm2ddl:
-          auto: none
+          auto: update
 
 jwt:
   secret: rGFv2rHb8nQxTzLDN4UwPZoVbHzLkq3JD9gTMBYMGzQ=
