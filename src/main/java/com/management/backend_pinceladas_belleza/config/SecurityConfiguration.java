@@ -54,7 +54,7 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:8080", "http://localhost:5173", "https://pinceladas-belleza-backend.onrender.com", "http://localhost:4201", "http://localhost:4200"));
+        configuration.setAllowedOrigins(List.of("http://localhost:8080", "http://localhost:5173", "https://pinceladasdebelleza.netlify.app", "http://localhost:4201", "http://localhost:4200"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(Boolean.valueOf(true));
