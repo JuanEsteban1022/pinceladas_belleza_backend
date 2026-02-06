@@ -2,12 +2,9 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=pinceladas_belleza
-#    username: postgres
-#    password: Admin
-    url: jdbc:postgresql://biazz3hs24qqgnzjyikg-postgresql.services.clever-cloud.com:5432/biazz3hs24qqgnzjyikg?UseSSL=true&serverTimezone=UTC
-    username: ut0hpzqvekhwmlzyllzn
-    password: 99GPtyIQi7lQ5tt8WQv09qbwnGNAu2
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:Admin}
 
   jpa:
 #    database: postgresql
@@ -23,10 +20,10 @@ spring:
           auto: update
 
 jwt:
-  secret: rGFv2rHb8nQxTzLDN4UwPZoVbHzLkq3JD9gTMBYMGzQ=
-  expiration: 86400000
+  secret: ${JWT_SECRET:rGFv2rHb8nQxTzLDN4UwPZoVbHzLkq3JD9gTMBYMGzQ=}
+  expiration: ${JWT_EXPIRATION:86400000}
   refresh:
-    expiration: 604800000
+    expiration: ${JWT_REFRESH_EXPIRATION:604800000}
 
 springdoc:
   api-docs:
@@ -38,4 +35,4 @@ springdoc:
     tags-sorter: alpha
 
 server:
-  port: 8080
+  port: ${PORT:8080}
