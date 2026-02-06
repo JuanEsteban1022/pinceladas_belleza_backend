@@ -2,7 +2,7 @@ package com.management.backend_pinceladas_belleza.productos.entity;
 
 import com.management.backend_pinceladas_belleza.categorias.entity.Categoria;
 import com.management.backend_pinceladas_belleza.proveedores.entity.Proveedor;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;

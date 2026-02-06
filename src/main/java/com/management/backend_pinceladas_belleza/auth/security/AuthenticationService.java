@@ -53,7 +53,7 @@ public class AuthenticationService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             return userRepository.findByUsername(input.getUsername())
-                    .orElseThrow();
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         } catch (AuthenticationException ex) {
             throw new RuntimeException("Credenciales inválidas");

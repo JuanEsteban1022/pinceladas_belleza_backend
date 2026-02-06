@@ -1,6 +1,6 @@
 package com.management.backend_pinceladas_belleza.categorias.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
