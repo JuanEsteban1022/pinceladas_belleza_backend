@@ -1,22 +1,21 @@
-
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=pinceladas_belleza
-#    username: postgres
-#    password: Admin
-    url: jdbc:postgresql://biazz3hs24qqgnzjyikg-postgresql.services.clever-cloud.com:5432/biazz3hs24qqgnzjyikg?UseSSL=true&serverTimezone=UTC
-    username: ut0hpzqvekhwmlzyllzn
-    password: 99GPtyIQi7lQ5tt8WQv09qbwnGNAu2
+    #    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=pinceladas_belleza
+    #    username: postgres
+    #    password: Admin
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
 
   jpa:
-#    database: postgresql
-#    database: pinceladas_belleza
+    #    database: postgresql
+    #    database: pinceladas_belleza
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     properties:
       hibernate:
-        default_schema: pinceladas_belleza
+        default_schema: pinceladasdb
         dialect: org.hibernate.dialect.PostgreSQLDialect
         hbm2ddl:
           auto: none

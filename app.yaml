@@ -1,0 +1,49 @@
+# Configuración para Google App Engine
+runtime: custom
+env: flex
+
+# Recursos
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
+# Configuración de health check
+health_check:
+  enable_health_check: True
+  check_interval_sec: 30
+  timeout_sec: 10
+  unhealthy_threshold: 2
+  healthy_threshold: 2
+
+# Configuración de red
+network:
+  forwarded_ports:
+    - 8080
+
+# Variables de entorno
+env_variables:
+  SPRING_PROFILES_ACTIVE: 'prod'
+  JAVA_OPTS: '-Xmx256m -Xms128m'
+
+# Configuración de escalado
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 5
+  cpu_utilization:
+    target_utilization: 0.75
+
+# Configuración de la aplicación
+readiness_check:
+  path: "/actuator/health"
+  check_interval_sec: 5
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+
+liveness_check:
+  path: "/actuator/health"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
