@@ -22,3 +22,20 @@ spring:
         default_schema: pinceladasdb
         hbm2ddl:
           auto: none
+jwt:
+  secret: rGFv2rHb8nQxTzLDN4UwPZoVbHzLkq3JD9gTMBYMGzQ=
+  expiration: 86400000
+  refresh:
+    expiration: 604800000
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+
+server:
+  port: 8080
