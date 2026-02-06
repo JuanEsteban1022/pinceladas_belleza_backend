@@ -1,39 +1,24 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    #    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=pinceladas_belleza
-    #    username: postgres
-    #    password: Admin
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASS}
 
+    hikari:
+      pool-name: HikariPool
+      maximum-pool-size: 5
+      minimum-idle: 2
+      idle-timeout: 30000
+      max-lifetime: 600000
+      connection-timeout: 30000
+      leak-detection-threshold: 20000
+
   jpa:
-    #    database: postgresql
-    #    database: pinceladas_belleza
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
         default_schema: pinceladasdb
-        dialect: org.hibernate.dialect.PostgreSQLDialect
         hbm2ddl:
           auto: none
-
-jwt:
-  secret: rGFv2rHb8nQxTzLDN4UwPZoVbHzLkq3JD9gTMBYMGzQ=
-  expiration: 86400000
-  refresh:
-    expiration: 604800000
-
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    enabled: true
-    operations-sorter: method
-    tags-sorter: alpha
-
-server:
-  port: 8080
