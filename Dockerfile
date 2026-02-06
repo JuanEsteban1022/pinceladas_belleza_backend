@@ -1,44 +1,27 @@
 # ----------------------------------------------------
-# STAGE 1: Build (Construir la aplicación y crear el JAR)
+# STAGE 1: Build (Gradle + Java 11)
 # ----------------------------------------------------
-# Usamos una imagen que ya tiene Gradle y Java 17
-FROM gradle:8.4.0-jdk17 AS build
+FROM gradle:7.6-jdk11 AS build
 
-# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia los archivos de configuración de Gradle para cachear dependencias
-COPY build.gradle settings.gradle ./
+# Copiamos todo el proyecto
+COPY . .
 
-# Copia los archivos del Gradle Wrapper
-# Se separa para asegurar que se copia la estructura de carpetas (incluyendo el .jar)
-COPY gradlew .
-COPY gradle ./gradle
-
-# Dale permisos de ejecución al script gradlew
-RUN chmod +x gradlew
-
-# Copia el código fuente completo
-COPY src ./src
-
-# Construye la aplicación y genera el JAR ejecutable
-RUN ./gradlew bootJar
+# Construimos el JAR ejecutable (sin tests)
+RUN gradle clean bootJar -x test
 
 # ----------------------------------------------------
-# STAGE 2: Runtime (Ejecutar el JAR en un entorno ligero)
+# STAGE 2: Runtime (Java 11 ligero)
 # ----------------------------------------------------
-# Usamos una imagen más pequeña que solo tiene el JRE (Runtime Environment)
-FROM eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:11-jre-jammy
 
-# Define el puerto que tu aplicación Spring Boot usará (Render lo necesita)
+WORKDIR /app
+
 EXPOSE 8080
 
-# Establece el directorio de trabajo
-WORKDIR /app
-
-# Copia el archivo JAR desde la etapa de construcción anterior
-# La ruta por defecto de Gradle es build/libs/*.jar
+# Copiamos el JAR generado
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Comando para ejecutar la aplicación Spring Boot
+# Ejecutamos la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
