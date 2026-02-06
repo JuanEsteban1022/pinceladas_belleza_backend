@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -33,7 +32,7 @@ public class ApplicationConfiguration {
             return userRepository.findByUsername(username)
                     .map(user -> {
                         log.info("Usuario encontrado: {}", user.getUsername());
-                        return new User(user.getUsername(), user.getPassword(), Arrays.asList());
+                        return new User(user.getUsername(), user.getPassword(), List.of());
                     })
                     .orElseThrow(() -> {
                         log.warn("Usuario NO encontrado");
