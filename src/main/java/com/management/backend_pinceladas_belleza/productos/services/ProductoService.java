@@ -74,8 +74,20 @@ public class ProductoService implements IProductos {
         productoEntity.setNombre(producto.getNombre());
         productoEntity.setPrecio(producto.getPrecio());
         productoEntity.setDescripcion(producto.getDescripcion());
-        productoEntity.setCategoria(producto.getCategoria());
-        productoEntity.setProveedor(producto.getProveedor());
+        
+        // Buscar y asignar categoría y proveedor por ID
+        if (producto.getCategoria() != null && producto.getCategoria().getId() != null) {
+            Categoria categoria = categoriaRepository.findById(producto.getCategoria().getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Categoría", "id", producto.getCategoria().getId()));
+            productoEntity.setCategoria(categoria);
+        }
+        
+        if (producto.getProveedor() != null && producto.getProveedor().getId() != null) {
+            Proveedor proveedor = proveedoresRepository.findById(producto.getProveedor().getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Proveedor", "id", producto.getProveedor().getId()));
+            productoEntity.setProveedor(proveedor);
+        }
+        
         productoEntity.setFechaCreacion(LocalDate.now());
         productoEntity.setUrlDrive(producto.getUrlDrive());
         return productosRepository.save(productoEntity);
