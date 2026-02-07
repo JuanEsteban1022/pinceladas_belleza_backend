@@ -12,7 +12,7 @@ public interface IProductos {
 
     Productos createProducto(ProductosDto producto);
 
-    Productos updateProducto(Productos producto);
+    Productos updateProducto(ProductosDto producto);
 
     String deleteProducto(Long id);
 }

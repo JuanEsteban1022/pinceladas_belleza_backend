@@ -65,7 +65,7 @@ public class ProductoService implements IProductos {
     }
 
     @Override
-    public Productos updateProducto(Productos producto) {
+    public Productos updateProducto(ProductosDto producto) {
         if (producto.getId() == null) {
             throw new BadRequestException("El ID del producto es requerido para actualizar");
         }
@@ -74,17 +74,18 @@ public class ProductoService implements IProductos {
         productoEntity.setNombre(producto.getNombre());
         productoEntity.setPrecio(producto.getPrecio());
         productoEntity.setDescripcion(producto.getDescripcion());
+        productoEntity.setCantidadStock(producto.getCantidadStock());
         
         // Buscar y asignar categoría y proveedor por ID
-        if (producto.getCategoria() != null && producto.getCategoria().getId() != null) {
-            Categoria categoria = categoriaRepository.findById(producto.getCategoria().getId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Categoría", "id", producto.getCategoria().getId()));
+        if (producto.getCategoriaId() != null) {
+            Categoria categoria = categoriaRepository.findById(producto.getCategoriaId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Categoría", "id", producto.getCategoriaId()));
             productoEntity.setCategoria(categoria);
         }
         
-        if (producto.getProveedor() != null && producto.getProveedor().getId() != null) {
-            Proveedor proveedor = proveedoresRepository.findById(producto.getProveedor().getId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Proveedor", "id", producto.getProveedor().getId()));
+        if (producto.getProveedorId() != null) {
+            Proveedor proveedor = proveedoresRepository.findById(producto.getProveedorId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Proveedor", "id", producto.getProveedorId()));
             productoEntity.setProveedor(proveedor);
         }
         

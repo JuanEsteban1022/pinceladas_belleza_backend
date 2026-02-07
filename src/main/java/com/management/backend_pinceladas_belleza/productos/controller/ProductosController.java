@@ -69,7 +69,7 @@ public class ProductosController {
     @SecurityRequirement(name = "bearerAuth")
     @PatchMapping("/update")
     public ResponseEntity<Productos> update(
-            @Parameter(description = "Datos del producto a actualizar", required = true) @RequestBody Productos producto) {
+            @Parameter(description = "Datos del producto a actualizar", required = true) @RequestBody ProductosDto producto) {
         return ResponseEntity.ok(productos.updateProducto(producto));
     }
 
