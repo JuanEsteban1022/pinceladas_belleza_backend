@@ -28,6 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     
     private static final List<String> PUBLIC_ENDPOINTS = Arrays.asList(
         "/auth/",
+        "/productos",
         "/productos/",
         "/v3/api-docs/",
         "/swagger-ui/",
