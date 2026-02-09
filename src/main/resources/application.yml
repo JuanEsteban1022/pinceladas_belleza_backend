@@ -1,6 +1,9 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://biazz3hs24qqgnzjyikg-postgresql.services.clever-cloud.com:5432/biazz3hs24qqgnzjyikg?UseSSL=true&serverTimezone=UTC
+#    username: ut0hpzqvekhwmlzyllzn
+#    password: 99GPtyIQi7lQ5tt8WQv09qbwnGNAu2
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASS}

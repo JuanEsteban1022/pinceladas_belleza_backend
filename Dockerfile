@@ -8,8 +8,8 @@ WORKDIR /app
 # Copiamos todo el proyecto
 COPY . .
 
-# Construimos el JAR ejecutable (sin tests)
-RUN gradle clean bootJar -x test
+# Construimos el JAR ejecutable (sin daemon, sin tests)
+RUN gradle clean bootJar -x test --no-daemon
 
 # ----------------------------------------------------
 # STAGE 2: Runtime (Java 11 ligero)
@@ -18,10 +18,12 @@ FROM eclipse-temurin:11-jre-jammy
 
 WORKDIR /app
 
+# Railway usa puerto dinámico
+ENV PORT=8080
 EXPOSE 8080
 
-# Copiamos el JAR generado
+# Copiamos el JAR generado por Gradle
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Ejecutamos la aplicación
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Ejecutamos la aplicación (limitando memoria para free tier)
+ENTRYPOINT ["java", "-Xms128m", "-Xmx512m", "-jar", "app.jar"]
