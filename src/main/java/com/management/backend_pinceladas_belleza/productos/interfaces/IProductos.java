@@ -6,7 +6,7 @@ import com.management.backend_pinceladas_belleza.productos.entity.Productos;
 import java.util.List;
 
 public interface IProductos {
-    public List<Productos> getAll();
+    public List<ProductosDto> getAll();
 
     Productos getById(Long id);
 

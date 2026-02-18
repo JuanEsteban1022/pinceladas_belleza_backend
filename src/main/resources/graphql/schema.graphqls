@@ -1,0 +1,139 @@
+type Producto {
+    id: ID!
+    nombre: String
+    descripcion: String
+    precio: Float
+    cantidadStock: Int
+    categoria: Categoria
+    proveedor: Proveedor
+    fechaCreacion: String
+    urlDrive: String
+}
+
+type Categoria {
+    id: ID!
+    nombreCategoria: String
+    estado: Int
+    fechaCreated: String
+}
+
+type Proveedor {
+    id: ID!
+    nombre: String
+    contacto: String
+    fechaCreated: String
+}
+
+type Venta {
+    id: ID!
+    producto: String
+    cantidad: Int
+    total: Float
+    fecha: String
+}
+
+type VentaMensual {
+    mes: String
+    ventas: Float
+    cantidad: Int
+}
+
+type Pedido {
+    id: ID!
+    cliente: String
+    estado: String
+    total: Float
+    fecha: String
+}
+
+input ProductoInput {
+    nombre: String
+    descripcion: String
+    precio: Float
+    cantidadStock: Int
+    categoriaId: ID
+    proveedorId: ID
+    urlDrive: String
+}
+
+input ProductoUpdateInput {
+    id: ID!
+    nombre: String
+    descripcion: String
+    precio: Float
+    cantidadStock: Int
+    categoriaId: ID
+    proveedorId: ID
+    urlDrive: String
+}
+
+input CategoriaInput {
+    nombreCategoria: String
+    estado: Int
+}
+
+input CategoriaUpdateInput {
+    id: ID!
+    nombreCategoria: String
+    estado: Int
+}
+
+input VentaInput {
+    producto: String
+    cantidad: Int
+    total: Float
+    fecha: String
+}
+
+input PedidoInput {
+    cliente: String
+    estado: String
+    total: Float
+    fecha: String
+}
+
+type Query {
+    # Productos queries
+    productos: [Producto]
+    productoById(id: ID!): Producto
+    
+    # Categorias queries
+    categorias: [Categoria]
+    categoriaById(id: ID!): Categoria
+    
+    # Proveedores queries
+    proveedores: [Proveedor]
+    proveedorById(id: ID!): Proveedor
+    
+    # Ventas queries
+    ventas: [Venta]
+    ventaById(id: ID!): Venta
+    ventasMensuales: [VentaMensual]
+    
+    # Pedidos queries
+    pedidos: [Pedido]
+    pedidoById(id: ID!): Pedido
+}
+
+type Mutation {
+    # Productos mutations
+    createProducto(input: ProductoInput!): Producto
+    updateProducto(input: ProductoUpdateInput!): Producto
+    deleteProducto(id: ID!): Boolean
+    
+    # Categorias mutations
+    createCategoria(input: CategoriaInput!): Categoria
+    updateCategoria(input: CategoriaUpdateInput!): Categoria
+    deleteCategoria(id: ID!): Boolean
+    
+    # Ventas mutations
+    createVenta(input: VentaInput!): Venta
+    
+    # Pedidos mutations
+    createPedido(input: PedidoInput!): Pedido
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}

@@ -25,7 +25,7 @@ public class Productos {
 
     private String descripcion;
 
-    private BigDecimal precio;
+    private Double precio;
 
     @Column(name = "cantidad_en_stock")
     private Integer cantidadStock;

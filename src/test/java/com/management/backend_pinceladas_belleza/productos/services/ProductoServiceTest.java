@@ -32,6 +32,7 @@ import static org.mockito.Mockito.*;
  * Pruebas unitarias para ProductoService
  * 
  * @ExtendWith(MockitoExtension.class) - Habilita Mockito para crear mocks
+ * 
  * @Mock - Crea objetos simulados (mocks) de las dependencias
  * @InjectMocks - Inyecta los mocks en la clase que estamos probando
  */
@@ -77,7 +78,7 @@ class ProductoServiceTest {
                 .id(1L)
                 .nombre("Labial Rojo")
                 .descripcion("Labial de larga duración")
-                .precio(new BigDecimal("25.50"))
+                .precio(25.50)
                 .cantidadStock(100)
                 .categoria(categoria)
                 .proveedor(proveedor)
@@ -89,7 +90,7 @@ class ProductoServiceTest {
         productoDto = ProductosDto.builder()
                 .nombre("Labial Rojo")
                 .descripcion("Labial de larga duración")
-                .precio(new BigDecimal("25.50"))
+                .precio(25.50)
                 .cantidadStock(100)
                 .categoriaId(1L)
                 .proveedorId(1L)
@@ -114,7 +115,7 @@ class ProductoServiceTest {
         assertNotNull(resultado);
         assertEquals(1, resultado.size());
         assertEquals("Labial Rojo", resultado.get(0).getNombre());
-        
+
         // Verificamos que el método del repositorio fue llamado exactamente 1 vez
         verify(productosRepository, times(1)).findAll();
     }
@@ -150,9 +151,8 @@ class ProductoServiceTest {
         // ACT & ASSERT
         // Verificamos que se lance la excepción correcta
         ResourceNotFoundException exception = assertThrows(
-            ResourceNotFoundException.class,
-            () -> productoService.getById(999L)
-        );
+                ResourceNotFoundException.class,
+                () -> productoService.getById(999L));
 
         // Verificamos el mensaje de la excepción
         assertTrue(exception.getMessage().contains("Producto"));
@@ -178,7 +178,7 @@ class ProductoServiceTest {
         assertNotNull(resultado);
         assertEquals("Labial Rojo", resultado.getNombre());
         assertEquals(new BigDecimal("25.50"), resultado.getPrecio());
-        
+
         // Verificamos que se llamaron los métodos necesarios
         verify(categoriaRepository, times(1)).findById(1L);
         verify(proveedoresRepository, times(1)).findById(1L);
@@ -196,12 +196,11 @@ class ProductoServiceTest {
 
         // ACT & ASSERT
         BadRequestException exception = assertThrows(
-            BadRequestException.class,
-            () -> productoService.createProducto(productoDto)
-        );
+                BadRequestException.class,
+                () -> productoService.createProducto(productoDto));
 
         assertTrue(exception.getMessage().contains("nombre"));
-        
+
         // Verificamos que NO se llamó al repositorio
         verify(productosRepository, never()).save(any(Productos.class));
     }
@@ -213,13 +212,12 @@ class ProductoServiceTest {
     @DisplayName("Debe lanzar BadRequestException cuando el precio es 0 o negativo")
     void testCreateProducto_ConPrecioInvalido_DebeLanzarExcepcion() {
         // ARRANGE
-        productoDto.setPrecio(BigDecimal.ZERO);
+        productoDto.setPrecio(0.0);
 
         // ACT & ASSERT
         BadRequestException exception = assertThrows(
-            BadRequestException.class,
-            () -> productoService.createProducto(productoDto)
-        );
+                BadRequestException.class,
+                () -> productoService.createProducto(productoDto));
 
         assertTrue(exception.getMessage().contains("precio"));
         verify(productosRepository, never()).save(any(Productos.class));
@@ -237,9 +235,8 @@ class ProductoServiceTest {
 
         // ACT & ASSERT
         ResourceNotFoundException exception = assertThrows(
-            ResourceNotFoundException.class,
-            () -> productoService.createProducto(productoDto)
-        );
+                ResourceNotFoundException.class,
+                () -> productoService.createProducto(productoDto));
 
         assertTrue(exception.getMessage().contains("Categoría"));
         verify(productosRepository, never()).save(any(Productos.class));
@@ -258,9 +255,8 @@ class ProductoServiceTest {
 
         // ACT & ASSERT
         ResourceNotFoundException exception = assertThrows(
-            ResourceNotFoundException.class,
-            () -> productoService.createProducto(productoDto)
-        );
+                ResourceNotFoundException.class,
+                () -> productoService.createProducto(productoDto));
 
         assertTrue(exception.getMessage().contains("Proveedor"));
         verify(productosRepository, never()).save(any(Productos.class));
@@ -273,10 +269,10 @@ class ProductoServiceTest {
     @DisplayName("Debe actualizar producto exitosamente")
     void testUpdateProducto_ConDatosValidos_DebeActualizarProducto() {
         // ARRANGE
-        Productos productoActualizado = Productos.builder()
+        ProductosDto productoActualizado = ProductosDto.builder()
                 .id(1L)
                 .nombre("Labial Rosa")
-                .precio(new BigDecimal("30.00"))
+                .precio(30.00)
                 .build();
 
         when(productosRepository.findById(1L)).thenReturn(Optional.of(producto));
@@ -298,14 +294,13 @@ class ProductoServiceTest {
     @DisplayName("Debe lanzar BadRequestException al actualizar sin ID")
     void testUpdateProducto_SinId_DebeLanzarExcepcion() {
         // ARRANGE
-        Productos productoSinId = new Productos();
+        ProductosDto productoSinId = new ProductosDto();
         productoSinId.setNombre("Test");
 
         // ACT & ASSERT
         BadRequestException exception = assertThrows(
-            BadRequestException.class,
-            () -> productoService.updateProducto(productoSinId)
-        );
+                BadRequestException.class,
+                () -> productoService.updateProducto(productoSinId));
 
         assertTrue(exception.getMessage().contains("ID"));
         verify(productosRepository, never()).save(any(Productos.class));
@@ -342,9 +337,8 @@ class ProductoServiceTest {
 
         // ACT & ASSERT
         ResourceNotFoundException exception = assertThrows(
-            ResourceNotFoundException.class,
-            () -> productoService.deleteProducto(999L)
-        );
+                ResourceNotFoundException.class,
+                () -> productoService.deleteProducto(999L));
 
         assertTrue(exception.getMessage().contains("Producto"));
         verify(productosRepository, never()).deleteById(anyLong());

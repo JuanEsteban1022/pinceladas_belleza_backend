@@ -37,6 +37,9 @@ public class SecurityConfiguration {
                 .authorizeRequests(auth -> auth
                         .antMatchers("/auth/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/productos/**").permitAll()
+                        .antMatchers("/graphql/**").permitAll()
+                        .antMatchers("/graphiql/**").permitAll()
+                        .antMatchers("/graphiql").permitAll()
                         .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -55,7 +58,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of("https://pinceladas-shop.netlify.app", "https://pinceladasdebelleza.netlify.app", "http://localhost:4201", "http://localhost:4200"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE", "PUT", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(Boolean.valueOf(true));
 

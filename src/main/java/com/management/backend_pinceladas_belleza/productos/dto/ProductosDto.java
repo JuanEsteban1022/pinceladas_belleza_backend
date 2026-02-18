@@ -14,7 +14,7 @@ public class ProductosDto {
     private String nombre;
     private String descripcion;
     private String beneficios;
-    private BigDecimal precio;
+    private Double precio;
     private Integer cantidadStock;
     private Long categoriaId;
     private Long proveedorId;

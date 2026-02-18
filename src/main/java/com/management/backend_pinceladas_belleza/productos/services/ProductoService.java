@@ -1,13 +1,13 @@
 package com.management.backend_pinceladas_belleza.productos.services;
 
+import com.management.backend_pinceladas_belleza.categorias.entity.Categoria;
+import com.management.backend_pinceladas_belleza.categorias.repository.CategoriaRepository;
 import com.management.backend_pinceladas_belleza.exception.BadRequestException;
 import com.management.backend_pinceladas_belleza.exception.ResourceNotFoundException;
 import com.management.backend_pinceladas_belleza.productos.dto.ProductosDto;
 import com.management.backend_pinceladas_belleza.productos.entity.Productos;
 import com.management.backend_pinceladas_belleza.productos.interfaces.IProductos;
 import com.management.backend_pinceladas_belleza.productos.repository.ProductosRepository;
-import com.management.backend_pinceladas_belleza.categorias.entity.Categoria;
-import com.management.backend_pinceladas_belleza.categorias.repository.CategoriaRepository;
 import com.management.backend_pinceladas_belleza.proveedores.entity.Proveedor;
 import com.management.backend_pinceladas_belleza.proveedores.repository.ProveedoresRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class ProductoService implements IProductos {
         if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
             throw new BadRequestException("El nombre del producto es requerido");
         }
-        
+
         if (producto.getPrecio() == null || producto.getPrecio().doubleValue() <= 0) {
             throw new BadRequestException("El precio del producto debe ser mayor a 0");
         }
@@ -69,26 +69,26 @@ public class ProductoService implements IProductos {
         if (producto.getId() == null) {
             throw new BadRequestException("El ID del producto es requerido para actualizar");
         }
-        
+
         Productos productoEntity = getById(producto.getId());
         productoEntity.setNombre(producto.getNombre());
         productoEntity.setPrecio(producto.getPrecio());
         productoEntity.setDescripcion(producto.getDescripcion());
         productoEntity.setCantidadStock(producto.getCantidadStock());
-        
+
         // Buscar y asignar categoría y proveedor por ID
         if (producto.getCategoriaId() != null) {
             Categoria categoria = categoriaRepository.findById(producto.getCategoriaId())
                     .orElseThrow(() -> new ResourceNotFoundException("Categoría", "id", producto.getCategoriaId()));
             productoEntity.setCategoria(categoria);
         }
-        
+
         if (producto.getProveedorId() != null) {
             Proveedor proveedor = proveedoresRepository.findById(producto.getProveedorId())
                     .orElseThrow(() -> new ResourceNotFoundException("Proveedor", "id", producto.getProveedorId()));
             productoEntity.setProveedor(proveedor);
         }
-        
+
         productoEntity.setFechaCreacion(LocalDate.now());
         productoEntity.setUrlDrive(producto.getUrlDrive());
         return productosRepository.save(productoEntity);
