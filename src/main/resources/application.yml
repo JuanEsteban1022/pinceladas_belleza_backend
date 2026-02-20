@@ -42,7 +42,7 @@ springdoc:
     tags-sorter: alpha
 
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 graphiql:
   enabled: true
