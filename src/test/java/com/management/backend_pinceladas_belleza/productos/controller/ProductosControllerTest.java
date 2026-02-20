@@ -10,12 +10,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -32,12 +33,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Pruebas de Integración para ProductosController
  * 
  * @WebMvcTest - Carga solo el controlador y sus dependencias
- * @AutoConfigureMockMvc - Configura MockMvc automáticamente
  * @MockBean - Crea un mock del servicio
  * @WithMockUser - Simula un usuario autenticado
  */
-@WebMvcTest(ProductosController.class)
-@AutoConfigureMockMvc(addFilters = false) // Desactiva filtros de seguridad para las pruebas
+@WebMvcTest(controllers = ProductosController.class)
+@Import(ProductosControllerTestConfig.class)
+@ExtendWith(org.mockito.junit.jupiter.MockitoExtension.class)
 @DisplayName("Pruebas de Integración - ProductosController")
 class ProductosControllerTest {
 
@@ -47,7 +48,7 @@ class ProductosControllerTest {
         @Autowired
         private ObjectMapper objectMapper;
 
-        @MockBean
+        @Autowired
         private IProductos productosService;
 
         private Productos producto;
