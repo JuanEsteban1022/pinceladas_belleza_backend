@@ -1,7 +1,8 @@
 package com.management.backend_pinceladas_belleza.productos.controller;
 
+import com.management.backend_pinceladas_belleza.common.dto.ErrorResponse;
 import com.management.backend_pinceladas_belleza.common.dto.PaginatedResponse;
-import com.management.backend_pinceladas_belleza.common.exception.ResourceNotFoundException;
+import com.management.backend_pinceladas_belleza.exception.ResourceNotFoundException;
 import com.management.backend_pinceladas_belleza.productos.dto.ProductosDto;
 import com.management.backend_pinceladas_belleza.productos.entity.Productos;
 import com.management.backend_pinceladas_belleza.productos.interfaces.IProductos;

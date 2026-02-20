@@ -1,7 +1,8 @@
 package com.management.backend_pinceladas_belleza.categorias.controller;
 
+import com.management.backend_pinceladas_belleza.common.dto.ErrorResponse;
 import com.management.backend_pinceladas_belleza.common.dto.PaginatedResponse;
-import com.management.backend_pinceladas_belleza.common.exception.ResourceNotFoundException;
+import com.management.backend_pinceladas_belleza.exception.ResourceNotFoundException;
 import com.management.backend_pinceladas_belleza.categorias.dto.CategoriaDto;
 import com.management.backend_pinceladas_belleza.categorias.entity.Categoria;
 import com.management.backend_pinceladas_belleza.categorias.interfaces.ICategoria;
@@ -55,9 +56,8 @@ public class CategoriaController {
         // Filtrar por búsqueda si se proporciona
         if (search != null && !search.trim().isEmpty()) {
             allCategorias = allCategorias.stream()
-                .filter(cat -> cat.getNombre().toLowerCase().contains(search.toLowerCase()) ||
-                             (cat.getDescripcion() != null && 
-                              cat.getDescripcion().toLowerCase().contains(search.toLowerCase())))
+                .filter(cat -> cat.getNombreCategoria() != null &&
+                        cat.getNombreCategoria().toLowerCase().contains(search.toLowerCase()))
                 .collect(Collectors.toList());
         }
         
@@ -158,8 +158,8 @@ public class CategoriaController {
         
         CategoriaDto dto = new CategoriaDto();
         dto.setId(entity.getId());
-        dto.setNombre(entity.getNombre());
-        dto.setDescripcion(entity.getDescripcion());
+        dto.setNombreCategoria(entity.getNombreCategoria());
+        dto.setEstado(entity.getEstado());
         return dto;
     }
 
@@ -173,8 +173,8 @@ public class CategoriaController {
         
         Categoria entity = new Categoria();
         entity.setId(dto.getId());
-        entity.setNombre(dto.getNombre());
-        entity.setDescripcion(dto.getDescripcion());
+        entity.setNombreCategoria(dto.getNombreCategoria());
+        entity.setEstado(dto.getEstado());
         return entity;
     }
 }

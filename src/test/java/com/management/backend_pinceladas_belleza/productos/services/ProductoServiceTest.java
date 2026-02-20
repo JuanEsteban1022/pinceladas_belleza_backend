@@ -109,7 +109,7 @@ class ProductoServiceTest {
         when(productosRepository.findAll()).thenReturn(productosEsperados);
 
         // ACT (Actuar): Ejecutamos el método que queremos probar
-        List<Productos> resultado = productoService.getAll();
+        List<ProductosDto> resultado = productoService.getAll();
 
         // ASSERT (Afirmar): Verificamos que el resultado sea el esperado
         assertNotNull(resultado);
@@ -177,7 +177,7 @@ class ProductoServiceTest {
         // ASSERT
         assertNotNull(resultado);
         assertEquals("Labial Rojo", resultado.getNombre());
-        assertEquals(new BigDecimal("25.50"), resultado.getPrecio());
+        assertEquals(25.50, resultado.getPrecio());
 
         // Verificamos que se llamaron los métodos necesarios
         verify(categoriaRepository, times(1)).findById(1L);

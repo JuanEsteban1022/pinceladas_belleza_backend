@@ -81,16 +81,26 @@ class ProductosControllerTest {
         @DisplayName("GET /productos - Debe retornar lista de productos con status 200")
         void testGetAll_DebeRetornarListaDeProductos() throws Exception {
                 // ARRANGE
-                List<Productos> productos = Arrays.asList(producto);
+                ProductosDto productoDtoRespuesta = ProductosDto.builder()
+                                .id(1L)
+                                .nombre("Labial Rojo")
+                                .descripcion("Labial de larga duración")
+                                .precio(25.50)
+                                .cantidadStock(100)
+                                .categoriaId(1L)
+                                .proveedorId(1L)
+                                .build();
+
+                List<ProductosDto> productos = Arrays.asList(productoDtoRespuesta);
                 when(productosService.getAll()).thenReturn(productos);
 
                 // ACT & ASSERT
                 mockMvc.perform(get("/productos")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$", hasSize(1)))
-                                .andExpect(jsonPath("$[0].nombre", is("Labial Rojo")))
-                                .andExpect(jsonPath("$[0].precio", is(25.50)));
+                                .andExpect(jsonPath("$.items", hasSize(1)))
+                                .andExpect(jsonPath("$.items[0].nombre", is("Labial Rojo")))
+                                .andExpect(jsonPath("$.items[0].precio", is(25.50)));
         }
 
         /**

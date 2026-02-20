@@ -19,7 +19,7 @@ public class ProductosResolver {
 
     @QueryMapping
     public List<Productos> productos() {
-        return productoService.getAll();
+        return productoService.getAllEntities();
     }
 
     @QueryMapping

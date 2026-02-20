@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,14 @@ public class ProductoService implements IProductos {
     private final ProveedoresRepository proveedoresRepository;
 
     @Override
-    public List<Productos> getAll() {
+    public List<ProductosDto> getAll() {
+        return productosRepository.findAll()
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<Productos> getAllEntities() {
         return productosRepository.findAll();
     }
 
@@ -99,5 +107,22 @@ public class ProductoService implements IProductos {
         Productos productoEntity = getById(id);
         productosRepository.deleteById(id);
         return "Producto eliminado exitosamente";
+    }
+
+    private ProductosDto convertToDto(Productos entity) {
+        if (entity == null) {
+            return null;
+        }
+
+        return ProductosDto.builder()
+                .id(entity.getId())
+                .nombre(entity.getNombre())
+                .descripcion(entity.getDescripcion())
+                .precio(entity.getPrecio())
+                .cantidadStock(entity.getCantidadStock())
+                .categoriaId(entity.getCategoria() != null ? entity.getCategoria().getId() : null)
+                .proveedorId(entity.getProveedor() != null ? entity.getProveedor().getId() : null)
+                .urlDrive(entity.getUrlDrive())
+                .build();
     }
 }

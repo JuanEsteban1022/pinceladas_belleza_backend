@@ -1,6 +1,8 @@
 package com.management.backend_pinceladas_belleza.common.exception;
 
 import com.management.backend_pinceladas_belleza.common.dto.ErrorResponse;
+import com.management.backend_pinceladas_belleza.exception.BadRequestException;
+import com.management.backend_pinceladas_belleza.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
