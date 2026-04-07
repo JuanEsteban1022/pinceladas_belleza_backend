@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/category")
 @RequiredArgsConstructor
 @Tag(name = "Categorías", description = "Gestión de categorías de productos")
-@SecurityRequirement(name = "bearerAuth")
 public class CategoriaController {
 
     private final ICategoria categoriaImp;
@@ -92,6 +91,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "404", description = "Categoría no encontrada", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaDto> obtenerCategoria(
             @Parameter(description = "ID de la categoría a buscar", required = true) @PathVariable @NotNull Long id) {
@@ -110,6 +110,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "400", description = "Datos inválidos", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/create")
     public ResponseEntity<CategoriaDto> createCategoria(
             @Parameter(description = "Datos de la categoría a crear", required = true) @RequestBody CategoriaDto categoria) {
@@ -125,6 +126,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "404", description = "Categoría no encontrada", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarCategoria(
             @Parameter(description = "ID de la categoría a eliminar", required = true) @PathVariable @NotNull Long id) {
@@ -139,6 +141,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "404", description = "Categoría no encontrada", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
+    @SecurityRequirement(name = "bearerAuth")
     @PatchMapping("/update")
     public ResponseEntity<CategoriaDto> updateCategoria(
             @Parameter(description = "Datos de la categoría a actualizar", required = true) @RequestBody CategoriaDto categoria) {
