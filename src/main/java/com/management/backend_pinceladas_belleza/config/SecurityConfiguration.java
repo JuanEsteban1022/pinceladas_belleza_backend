@@ -37,6 +37,7 @@ public class SecurityConfiguration {
                 .authorizeRequests(auth -> auth
                         .antMatchers("/auth/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/productos/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/category/**").permitAll()
                         .antMatchers("/graphql/**").permitAll()
                         .antMatchers("/graphiql/**").permitAll()
                         .antMatchers("/graphiql").permitAll()
