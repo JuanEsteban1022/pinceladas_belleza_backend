@@ -42,7 +42,7 @@ public class ProductosController {
             @RequestParam(defaultValue = "0") @Min(0) int page,
             
             @Parameter(description = "Tamaño de página", example = "20") 
-            @RequestParam(defaultValue = "20") @Min(1) int size,
+            @RequestParam(defaultValue = "1000") @Min(1) int size,
             
             @Parameter(description = "Término de búsqueda") 
             @RequestParam(required = false) String search) {
