@@ -28,8 +28,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     
     private static final List<String> PUBLIC_ENDPOINTS = Arrays.asList(
         "/auth/",
-        "/productos",
-        "/productos/",
         "/v3/api-docs/",
         "/swagger-ui/",
         "/swagger-ui.html"
@@ -94,6 +92,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
     
     private boolean isPublicEndpoint(String requestPath) {
-        return PUBLIC_ENDPOINTS.stream().anyMatch(requestPath::startsWith);
+        return PUBLIC_ENDPOINTS.stream().anyMatch(publicEndpoint ->
+            publicEndpoint.endsWith("/")
+                ? requestPath.startsWith(publicEndpoint)
+                : requestPath.equals(publicEndpoint)
+        );
     }
 }
